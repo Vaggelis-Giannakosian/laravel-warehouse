@@ -8,7 +8,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 
@@ -34,17 +34,22 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated =$request->validate([
             'name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'address' => 'required|string',
             'email' => 'required|string|email|max:255|unique:users',
+            'username' => 'required|string|max:255|unique:users',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'country_id' => ['required','integer',Rule::exists('countries','id')]
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $user = User::create(array_merge(
+            $validated,
+            [
+                'registration_date' => now()->timestamp,
+            ]
+        ));
 
         event(new Registered($user));
 

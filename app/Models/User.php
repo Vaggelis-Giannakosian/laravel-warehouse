@@ -36,6 +36,7 @@ class User extends Authenticatable
         'registration_date',
         'status',
         'is_admin',
+        'country_id',
     ];
 
     /**
