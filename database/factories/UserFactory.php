@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Country;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -16,23 +18,39 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'last_name' => $this->faker->lastName(),
+            'address' => $this->faker->address(),
             'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'status' => User::STATUS_ACTIVE,
+            'registration_date' => now()->timestamp,
+
+            'username' => $this->faker->unique()->userName(),
+            'password' => 'password', // password
+
+            'is_admin' => false,
             'remember_token' => Str::random(10),
+            'country_id' => function(){
+                return Country::factory()->create()->id;
+            }
         ];
     }
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
-     */
-    public function unverified()
+    public function inactive()
     {
         return $this->state(function (array $attributes) {
             return [
-                'email_verified_at' => null,
+                'status'  => User::STATUS_INACTIVE
+            ];
+        });
+    }
+
+    public function admin()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'username' => 'admin',
+                'password' => 'password',
+                'is_admin' => true
             ];
         });
     }
