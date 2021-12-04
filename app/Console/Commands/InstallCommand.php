@@ -46,7 +46,7 @@ class InstallCommand extends Command
 
         $this->call('cache:clear');
 
-        $this->call('migrate', ['--seed' => true]);
+        $this->call('migrate:fresh', ['--seed' => true]);
 
         $this->goodbye();
     }
