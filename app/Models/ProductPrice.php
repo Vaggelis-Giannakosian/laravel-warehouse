@@ -11,6 +11,10 @@ class ProductPrice extends Model
 {
     use HasFactory;
 
+    protected $appends = [
+        'datetime'
+    ];
+
     public function product():BelongsTo
     {
         return $this->belongsTo(Product::class);
