@@ -11,14 +11,14 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'sqlearn:install';
+    protected $signature = 'warehouse:install';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Install Sqlearn demo project';
+    protected $description = 'Install Warehouse demo project';
 
     /**
      * Create a new command instance.
@@ -38,16 +38,14 @@ class InstallCommand extends Command
     public function handle()
     {
         $this->welcome();
-
+        $this->createDbFile();
         $this->createEnvFile();
+
+        $this->call('config:cache');
+        $this->call('migrate:fresh', ['--seed' => true, '--force' => true]);
         $this->call('key:generate');
 
-        $this->createDbFile();
-
-        $this->call('cache:clear');
-
-        $this->call('migrate:fresh', ['--seed' => true]);
-
+        $this->call('config:clear');
         $this->goodbye();
     }
 
@@ -68,7 +66,7 @@ class InstallCommand extends Command
             copy('.env.example', '.env');
 
             $this->line('.env file successfully created');
-        }else{
+        } else {
             $this->line('.env file already exists');
         }
     }

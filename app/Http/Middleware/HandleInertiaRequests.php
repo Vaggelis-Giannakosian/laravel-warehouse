@@ -17,7 +17,7 @@ class HandleInertiaRequests extends Middleware
     /**
      * Determine the current asset version.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return string|null
      */
     public function version(Request $request)
@@ -28,14 +28,26 @@ class HandleInertiaRequests extends Middleware
     /**
      * Define the props that are shared by default.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function share(Request $request)
     {
+        if (
+            optional(
+                optional(session()->get('errors'))->getBag('default')
+            )->getMessages()
+        ){
+            flash('Check your errors and try again', 'danger');
+        }
+
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
+            ],
+            'asset' => asset(''),
+            'flash' => [
+                'message' => fn() => $request->session()->pull('flash'),
             ],
         ]);
     }

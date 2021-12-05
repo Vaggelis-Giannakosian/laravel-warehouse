@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        <title inertia>{{ config('app.name', 'SqLearn') }}</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -15,13 +15,11 @@
 
         <!-- Scripts -->
         @routes
+        <script src="{{ mix('js/manifest.js') }}" defer></script>
+        <script src="{{ mix('js/vendor.js') }}" defer></script>
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
         @inertia
-
-        @env ('local')
-            <script src="http://localhost:8080/js/bundle.js"></script>
-        @endenv
     </body>
 </html>

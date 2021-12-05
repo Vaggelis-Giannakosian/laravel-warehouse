@@ -28,11 +28,11 @@
 </template>
 
 <script>
-import BreezeButton from '@/Components/Button.vue'
+import BreezeButton from '@/Components/FormInputs/Button.vue'
 import BreezeGuestLayout from '@/Layouts/Guest.vue'
-import BreezeInput from '@/Components/Input.vue'
-import BreezeLabel from '@/Components/Label.vue'
-import BreezeValidationErrors from '@/Components/ValidationErrors.vue'
+import BreezeInput from '@/Components/FormInputs/Input.vue'
+import BreezeLabel from '@/Components/FormInputs/Label.vue'
+import BreezeValidationErrors from '@/Components/FormInputs/ValidationErrors.vue'
 import { Head } from '@inertiajs/inertia-vue3';
 
 export default {

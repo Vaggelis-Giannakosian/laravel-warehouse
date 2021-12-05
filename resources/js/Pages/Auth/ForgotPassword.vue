@@ -14,10 +14,15 @@
     <form @submit.prevent="submit">
         <div>
             <BreezeLabel for="email" value="Email" />
-            <BreezeInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus autocomplete="username" />
+            <BreezeInput id="email" type="text" class="mt-1 block w-full" v-model="form.email" autofocus autocomplete="username" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="flex items-center justify-between mt-4">
+            <nav-link :href="route('login')">
+                <BreezeButton :class="{ 'opacity-25': form.processing }">
+                    Login
+                </BreezeButton>
+            </nav-link>
             <BreezeButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Email Password Reset Link
             </BreezeButton>
@@ -26,11 +31,11 @@
 </template>
 
 <script>
-import BreezeButton from '@/Components/Button.vue'
+import BreezeButton from '@/Components/FormInputs/Button.vue'
 import BreezeGuestLayout from '@/Layouts/Guest.vue'
-import BreezeInput from '@/Components/Input.vue'
-import BreezeLabel from '@/Components/Label.vue'
-import BreezeValidationErrors from '@/Components/ValidationErrors.vue'
+import BreezeInput from '@/Components/FormInputs/Input.vue'
+import BreezeLabel from '@/Components/FormInputs/Label.vue'
+import BreezeValidationErrors from '@/Components/FormInputs/ValidationErrors.vue'
 import { Head } from '@inertiajs/inertia-vue3';
 
 export default {

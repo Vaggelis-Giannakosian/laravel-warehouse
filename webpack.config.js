@@ -6,4 +6,18 @@ module.exports = {
             '@': path.resolve('resources/js'),
         },
     },
+    module:{
+        rules: [
+            {
+                test: /\.postcss$/,
+                use: [
+                    'vue-style-loader',
+                    'css-loader',
+                    {
+                        loader: 'postcss-loader'
+                    }
+                ]
+            }
+        ],
+    },
 };

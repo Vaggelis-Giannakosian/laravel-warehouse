@@ -9,8 +9,8 @@
 
     <form @submit.prevent="submit">
         <div>
-            <BreezeLabel for="email" value="Email" />
-            <BreezeInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus autocomplete="username" />
+            <BreezeLabel for="username" value="Username" />
+            <BreezeInput id="username" type="text" class="mt-1 block w-full" v-model="form.username" required autofocus autocomplete="username" />
         </div>
 
         <div class="mt-4">
@@ -38,12 +38,12 @@
 </template>
 
 <script>
-import BreezeButton from '@/Components/Button.vue'
-import BreezeCheckbox from '@/Components/Checkbox.vue'
+import BreezeButton from '@/Components/FormInputs/Button.vue'
+import BreezeCheckbox from '@/Components/FormInputs/Checkbox.vue'
 import BreezeGuestLayout from '@/Layouts/Guest.vue'
-import BreezeInput from '@/Components/Input.vue'
-import BreezeLabel from '@/Components/Label.vue'
-import BreezeValidationErrors from '@/Components/ValidationErrors.vue'
+import BreezeInput from '@/Components/FormInputs/Input.vue'
+import BreezeLabel from '@/Components/FormInputs/Label.vue'
+import BreezeValidationErrors from '@/Components/FormInputs/ValidationErrors.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3';
 
 export default {
@@ -67,7 +67,7 @@ export default {
     data() {
         return {
             form: this.$inertia.form({
-                email: '',
+                username: '',
                 password: '',
                 remember: false
             })

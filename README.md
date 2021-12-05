@@ -1,4 +1,4 @@
-# Demo Project for Sqlearn
+# Demo Warehouse project
 
 The request was to create a product warehouse managing system using php.
 
@@ -28,6 +28,8 @@ npm install
 npm run prod
 php artisan serve
 ```
+
+In order to be able to use the forget password flow you must provide an smtp server configuration in the .env file.
 
 ### Tests
 
