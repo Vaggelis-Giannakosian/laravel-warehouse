@@ -3,7 +3,7 @@
         <!-- Custom template example -->
         <notifications
             group="top-left"
-            :duration="5000"
+            :duration="3500"
             :width="500"
             animation-name="v-fade-left"
             position="top left"

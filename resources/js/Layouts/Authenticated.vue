@@ -12,29 +12,7 @@
 
             <Header :toggle-menu="toggleMenu" :collapsed="collapsed">
                 <template #header>
-                    <slot name="header">
-                        <nav class="bg-grey-light rounded font-sans w-full leading-tight">
-                            <ol class="list-reset flex text-grey-dark mb-0 items-center">
-                                <li v-for="(breadcrumb,index) in $page.props.breadcrumbs" :key="index">
-
-                                    <!-- last item -->
-                                    <span v-if="index === $page.props.breadcrumbs.length - 1"
-                                          v-text="breadcrumb.title"
-                                          :class="{'font-bold text-gray-800': $page.props.breadcrumbs.length === 1}"
-                                    />
-
-                                    <!-- all other items-->
-                                    <span v-else>
-                                         <nav-link  :href="breadcrumb.url" class="font-bold text-gray-800">
-                                           {{ breadcrumb.title }}
-                                         </nav-link>
-                                         <span class="mx-1">/</span>
-                                    </span>
-                                </li>
-                            </ol>
-                        </nav>
-
-                    </slot>
+                    <slot name="header"/>
                 </template>
             </Header>
 

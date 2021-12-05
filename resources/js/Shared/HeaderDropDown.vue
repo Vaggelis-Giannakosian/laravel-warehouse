@@ -22,7 +22,7 @@
 
                 <template #content>
                     <BreezeDropdownLink :href="route('logout')" method="post" as="button">
-                        Log Out
+                        Αποσύνδεση
                     </BreezeDropdownLink>
                 </template>
             </BreezeDropdown>

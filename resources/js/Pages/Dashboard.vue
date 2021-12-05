@@ -2,8 +2,14 @@
     <Head title="Dashboard"/>
 
     <BreezeAuthenticatedLayout>
+        <template #header>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-0">
+                Πίνακας Ελέγχου
+            </h2>
+        </template>
+
         <card>
-            You're logged in!
+            Έχετε συνδεθεί!
         </card>
 
     </BreezeAuthenticatedLayout>

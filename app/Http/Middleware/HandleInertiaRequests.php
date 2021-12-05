@@ -38,7 +38,7 @@ class HandleInertiaRequests extends Middleware
                 optional(session()->get('errors'))->getBag('default')
             )->getMessages()
         ){
-            flash('Check your errors and try again', 'danger');
+            flash('Ελέγξτε τα σφάλματα και δοκιμάστε ξανά', 'danger');
         }
 
         return array_merge(parent::share($request), [

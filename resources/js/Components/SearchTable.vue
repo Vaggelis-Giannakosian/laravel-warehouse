@@ -4,7 +4,7 @@
 
             <h3 v-if="label" v-text="label" class="mr-auto text-lg text-lg mb-0"></h3>
 
-            <Input type="text" v-model="searchText" :placeholder="'Search'"
+            <Input type="text" v-model="searchText" placeholder="Αναζήτηση"
                    class="ml-auto py-1"/>
         </div>
 

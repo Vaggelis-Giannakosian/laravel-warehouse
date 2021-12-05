@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CountryController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -16,8 +17,10 @@ use Inertia\Inertia;
 */
 
 
-Route::get('/', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::group(['middleware' => ['auth']],function(){
+    Route::inertia('/','Dashboard')->name('dashboard');
+
+    Route::resource('/countries',CountryController::class)->except('show');
+});
 
 require __DIR__.'/auth.php';

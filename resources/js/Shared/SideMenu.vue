@@ -18,7 +18,7 @@
 
                 <template #content>
                     <BreezeDropdownLink :href="route('logout')" method="post" as="button">
-                        {{'Log Out'}}
+                        {{'Αποσύνδεση'}}
                     </BreezeDropdownLink>
                 </template>
             </BreezeDropdown>
@@ -49,11 +49,6 @@ export default {
         BreezeDropdown,
         Link,
         AdminMenu
-    },
-    data() {
-        return {
-            // current: route().current(''),
-        }
     },
     computed:{
         current(){
