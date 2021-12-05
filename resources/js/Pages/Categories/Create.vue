@@ -5,7 +5,7 @@
 
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-0">
-                Δημιουργία χώρας
+                Δημιουργία κατηγορίας
             </h2>
         </template>
 
@@ -13,10 +13,10 @@
             <div class="p-2 bg-white border-b border-gray-200">
                 <div class="flex justify-between">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-0">
-                        Δημιουργία νέας χώρας
+                        Δημιουργία νέας κατηγορίας
                     </h2>
 
-                    <nav-link  :href="route('countries.index')">
+                    <nav-link  :href="route('categories.index')">
                         <primary-button>
                            Επιστροφή
                         </primary-button>
@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-            <Form submit-method="post" :submit-url="route('countries.store')"/>
+            <Form submit-method="post" :submit-url="route('categories.store')"/>
 
         </card>
     </BreezeAuthenticatedLayout>

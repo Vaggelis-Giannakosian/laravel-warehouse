@@ -14,13 +14,13 @@
             <div class="text-right mb-3">
                 <nav-link :href="route('countries.create')">
                     <primary-button>
-                        {{'Δημιουργία Εγγραφής'}}
+                        Δημιουργία
                     </primary-button>
                 </nav-link>
             </div>
 
             <SearchTable label="Λίστα χωρών" :table-data="countries" :columns="columns"
-                         :filters="['id','name','code']">
+                         :filters="['id','name','code','users_count','providers_count']">
 
                 <template #action="{record}">
 

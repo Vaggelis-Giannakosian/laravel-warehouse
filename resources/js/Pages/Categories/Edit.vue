@@ -1,11 +1,11 @@
 <template>
-    <Head title="Dealers"/>
+    <Head title="Services"/>
 
     <BreezeAuthenticatedLayout>
 
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-0">
-                Δημιουργία χώρας
+                Επεξεργασία κατηγορίας
             </h2>
         </template>
 
@@ -13,31 +13,37 @@
             <div class="p-2 bg-white border-b border-gray-200">
                 <div class="flex justify-between">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-0">
-                        Δημιουργία νέας χώρας
+                        Ενημέρωση κατηγορίας "{{category.name}}"
                     </h2>
 
-                    <nav-link  :href="route('countries.index')">
+                    <nav-link  :href="route('categories.index')">
                         <primary-button>
-                           Επιστροφή
+                            Επιστροφή
                         </primary-button>
                     </nav-link>
                 </div>
             </div>
 
-            <Form submit-method="post" :submit-url="route('countries.store')"/>
-
+            <Form submit-method="put" :submit-url="route('categories.update',category)"
+                  :category="category"/>
         </card>
+
     </BreezeAuthenticatedLayout>
 </template>
 
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import {Head} from '@inertiajs/inertia-vue3';
-import Form from './Form';
+import PrimaryButton from '@/Components/Buttons/PrimaryButton'
+import Form from './Form'
 
 export default {
+    props:[
+        'category'
+    ],
     components: {
         BreezeAuthenticatedLayout,
+        PrimaryButton,
         Form,
         Head,
     },

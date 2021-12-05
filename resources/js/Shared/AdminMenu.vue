@@ -9,7 +9,17 @@
                 <DashboardOutlined class="mr-3"/>
 
                 <BreezeNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                    {{'Πίνακας Ελέγχου'}}
+                    Πίνακας Ελέγχου
+                </BreezeNavLink>
+            </div>
+        </a-menu-item>
+
+        <a-menu-item key="categories">
+            <div class="flex items-center">
+                <FolderOutlined class="mr-3"/>
+
+                <BreezeNavLink :href="route('categories.index')" :active="route().current('categories.*')">
+                    Κατηγορίες
                 </BreezeNavLink>
             </div>
         </a-menu-item>
@@ -19,7 +29,7 @@
                 <GlobalOutlined class="mr-3"/>
 
                 <BreezeNavLink :href="route('countries.index')" :active="route().current('countries.*')">
-                    {{'Χώρες'}}
+                    Χώρες
                 </BreezeNavLink>
             </div>
         </a-menu-item>
@@ -29,14 +39,14 @@
 
 <script>
 import BreezeNavLink from '@/Components/NavLink.vue'
-import {DashboardOutlined, GlobalOutlined} from '@ant-design/icons-vue'
+import {DashboardOutlined, GlobalOutlined, FolderOutlined} from '@ant-design/icons-vue'
 
 export default {
     name: "Admin",
     props:['current','handleClick'],
     components:{
         BreezeNavLink,
-        DashboardOutlined, GlobalOutlined,
+        DashboardOutlined, GlobalOutlined,FolderOutlined,
     }
 }
 </script>

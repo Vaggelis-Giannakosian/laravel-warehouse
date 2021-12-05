@@ -17,7 +17,7 @@ class CreateProductCategoriesTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->unsignedInteger('ordering');
+            $table->unsignedInteger('ordering')->nullable();
             $table->timestamps();
         });
     }
