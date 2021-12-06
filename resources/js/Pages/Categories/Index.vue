@@ -1,6 +1,6 @@
 <template>
 
-    <Head title="Dealers"/>
+    <Head title="Κατηγορίες"/>
 
     <BreezeAuthenticatedLayout>
 

@@ -1,5 +1,5 @@
 <template>
-    <Head title="Services"/>
+    <Head title="Κατηγορίες"/>
 
     <BreezeAuthenticatedLayout>
 

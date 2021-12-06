@@ -1,11 +1,11 @@
 <template>
-    <Head title="Χώρες"/>
+    <Head title="Προμηθευτές"/>
 
     <BreezeAuthenticatedLayout>
 
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-0">
-                Επεξεργασία χώρας
+                Επεξεργασία προμηθευτή
             </h2>
         </template>
 
@@ -13,10 +13,10 @@
             <div class="p-2 bg-white border-b border-gray-200">
                 <div class="flex justify-between">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-0">
-                        Ενημέρωση χώρας "{{country.name}}"
+                        Ενημέρωση προμηθευτή "{{provider.name}}"
                     </h2>
 
-                    <nav-link  :href="route('countries.index')">
+                    <nav-link  :href="route('providers.index')">
                         <primary-button>
                             Επιστροφή
                         </primary-button>
@@ -24,8 +24,8 @@
                 </div>
             </div>
 
-            <Form submit-method="put" :submit-url="route('countries.update',country)"
-                  :country="country"/>
+            <Form submit-method="put" :submit-url="route('providers.update',provider)"
+                  :provider="provider" :countries="countries"/>
         </card>
 
     </BreezeAuthenticatedLayout>
@@ -39,7 +39,8 @@ import Form from './Form'
 
 export default {
     props:[
-        'country'
+        'provider',
+        'countries'
     ],
     components: {
         BreezeAuthenticatedLayout,

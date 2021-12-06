@@ -1,5 +1,5 @@
 <template>
-    <Head title="Dealers"/>
+    <Head title="Χώρες"/>
 
     <BreezeAuthenticatedLayout>
 

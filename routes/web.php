@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProviderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,8 +21,11 @@ Route::group(['middleware' => ['auth']],function(){
     Route::inertia('/','Dashboard')->name('dashboard');
 
     Route::resource('/countries',CountryController::class)->except('show');
+
     Route::resource('/categories',ProductCategoryController::class)->except('show');
     Route::post('/categories/{category}/update-order',[ProductCategoryController::class,'updateOrder'])->name('categories.update-order');
+
+    Route::resource('/providers',ProviderController::class)->except('show');
 });
 
 require __DIR__.'/auth.php';
