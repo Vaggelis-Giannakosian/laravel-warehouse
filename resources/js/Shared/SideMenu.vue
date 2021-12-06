@@ -7,8 +7,7 @@
             </Link>
         </div>
 
-        <!-- Dynamic MENU-->
-        <component :is="activeMenu" :current="current" :handle-click="handleClick"/>
+        <Menu :current="current" :handle-click="handleClick"/>
 
         <div class="mt-auto flex flex-col text-center bottom_handlers">
             <BreezeDropdown align="right" width="48" v-if="!collapsed">
@@ -35,7 +34,7 @@ import { Link } from '@inertiajs/inertia-vue3';
 import BreezeApplicationLogo from '@/Components/ApplicationLogo.vue'
 import BreezeDropdownLink from '@/Components/DropdownLink'
 import BreezeDropdown from '@/Components/Dropdown'
-import AdminMenu from './AdminMenu'
+import Menu from './Menu'
 import {UserOutlined} from '@ant-design/icons-vue'
 
 export default {
@@ -48,15 +47,12 @@ export default {
         BreezeDropdownLink,
         BreezeDropdown,
         Link,
-        AdminMenu
+        Menu
     },
     computed:{
         current(){
             return route().current('').split('.')[0];
         },
-        activeMenu(){
-            return 'AdminMenu'
-        }
     },
     methods: {
         handleClick(e) {

@@ -14,6 +14,16 @@
             </div>
         </a-menu-item>
 
+        <a-menu-item key="users" v-if="parseInt($page.props.auth.user.is_admin)">
+            <div class="flex items-center">
+                <UsergroupAddOutlined class="mr-3"/>
+
+                <BreezeNavLink :href="route('users.index')" :active="route().current('users.*')">
+                    Χρήστες
+                </BreezeNavLink>
+            </div>
+        </a-menu-item>
+
         <a-menu-item key="providers">
             <div class="flex items-center">
                 <UsergroupAddOutlined class="mr-3"/>

@@ -68,7 +68,7 @@ import Button from '@/Components/FormInputs/Button'
 import TextArea from "@/Components/FormInputs/TextArea";
 
 export default {
-    name: 'CountryForm',
+    name: 'ProviderForm',
     props: ['submitMethod', 'submitUrl', 'provider','countries'],
     components: {
         TextArea,

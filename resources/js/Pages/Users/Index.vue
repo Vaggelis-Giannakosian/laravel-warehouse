@@ -1,30 +1,46 @@
 <template>
 
-    <Head title="Προμηθευτές"/>
+    <Head title="Χρήστες"/>
 
     <BreezeAuthenticatedLayout>
 
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-0">
-                Προμηθευτές
+                Χρήστες
             </h2>
         </template>
 
         <card>
             <div class="text-right mb-3">
-                <nav-link :href="route('providers.create')">
+                <nav-link :href="route('users.create')">
                     <primary-button>
                         Δημιουργία
                     </primary-button>
                 </nav-link>
             </div>
 
-            <SearchTable label="Λίστα χρηστών" :table-data="providers" :columns="columns"
-                         :filters="['id','name','description','address','phone1','phone2','fax','country.name']">
+            <SearchTable label="Λίστα προμηθευτών" :table-data="users" :columns="columns"
+                         :filters="['id','username','email','name','last_name','address','status','country.name']">
+
+
+
+                <template #status="{text}">
+                    <span class="px-2 py-1 text-xs font-bold leading-none rounded"
+                          v-text="text.toUpperCase()"
+                          :class="{'text-green-100 bg-green-700' : text === 'active' , 'text-gray-100 bg-gray-500': text === 'inactive'}"
+                    ></span>
+                </template>
+
+                <template #is_admin="{text}">
+                    <div class="text-center">
+                        <CheckCircleOutlined class="text-green-700" v-if="parseInt(text)" />
+                        <CloseCircleOutlined class="text-red-700" v-else />
+                    </div>
+                </template>
 
                 <template #action="{record}">
 
-                    <nav-link :href="route('providers.edit',record.id)" class="mr-3">
+                    <nav-link :href="route('users.edit',record.id)" class="mr-3">
                         <a href="#" title="Επεξεργασία">
                             <EditOutlined/>
                         </a>
@@ -52,17 +68,17 @@
 <script>
 import {defineComponent} from 'vue';
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
-import {EditOutlined, DeleteTwoTone} from '@ant-design/icons-vue'
+import {EditOutlined, DeleteTwoTone,CheckCircleOutlined,CloseCircleOutlined } from '@ant-design/icons-vue'
 import SearchTable from '@/Components/SearchTable';
 import {Head} from '@inertiajs/inertia-vue3';
 
 export default defineComponent({
     name: 'ProvidersIndex',
-    props: ['providers'],
+    props: ['users'],
     components: {
         BreezeAuthenticatedLayout,
         SearchTable,
-        EditOutlined, DeleteTwoTone,
+        EditOutlined, DeleteTwoTone,CheckCircleOutlined,CloseCircleOutlined,
         Head,
     },
     data() {
@@ -70,7 +86,7 @@ export default defineComponent({
     },
     methods: {
         deleteEntry(record) {
-            this.$inertia.delete(this.route('providers.destroy', record));
+            this.$inertia.delete(this.route('users.destroy', record));
         }
     },
     computed: {
@@ -91,11 +107,11 @@ export default defineComponent({
                     sorter: (a, b) => a.name.localeCompare(b.name),
                 },
                 {
-                    title: 'Περιγραφή',
-                    dataIndex: 'description',
-                    key: 'description',
+                    title: 'Επίθετο',
+                    dataIndex: 'last_name',
+                    key: 'last_name',
                     sortDirections: ['descend', 'ascend'],
-                    sorter: (a, b) => a.description.localeCompare(b.description),
+                    sorter: (a, b) => a.last_name.localeCompare(b.last_name),
                 },
                 {
                     title: 'Διεύθυνση',
@@ -105,25 +121,40 @@ export default defineComponent({
                     sorter: (a, b) => a.address.localeCompare(b.address),
                 },
                 {
-                    title: 'Τηλέφωνο 1',
-                    dataIndex: 'phone1',
-                    key: 'phone1',
+                    title: 'Όνομα χρήστη',
+                    dataIndex: 'username',
+                    key: 'username',
                     sortDirections: ['descend', 'ascend'],
-                    sorter: (a, b) => a.phone1 - b.phone1,
+                    sorter: (a, b) => a.username.localeCompare(b.username),
                 },
                 {
-                    title: 'Τηλέφωνο 2',
-                    dataIndex: 'phone2',
-                    key: 'phone2',
+                    title: 'Email',
+                    dataIndex: 'email',
+                    key: 'email',
                     sortDirections: ['descend', 'ascend'],
-                    sorter: (a, b) => a.phone2 - b.phone2,
+                    sorter: (a, b) => a.email.localeCompare(b.email),
                 },
                 {
-                    title: 'Φαξ',
-                    dataIndex: 'fax',
-                    key: 'fax',
+                    title: 'Κατάσταση',
+                    dataIndex: 'status',
+                    key: 'status',
+                    width:130,
                     sortDirections: ['descend', 'ascend'],
-                    sorter: (a, b) => a.fax - b.fax,
+                    sorter: (a, b) => a.status.localeCompare(b.status),
+                    slots:{
+                        customRender: 'status'
+                    }
+                },
+                {
+                    title: 'Διαχειριστής',
+                    dataIndex: 'is_admin',
+                    key: 'is_admin',
+                    width:140,
+                    sortDirections: ['descend', 'ascend'],
+                    sorter: (a, b) => a.is_admin - b.is_admin,
+                    slots:{
+                        customRender: 'is_admin'
+                    }
                 },
                 {
                     title: 'Χώρα',
@@ -131,13 +162,6 @@ export default defineComponent({
                     key: 'country.name',
                     sortDirections: ['descend', 'ascend'],
                     sorter: (a, b) => a.country.name.localeCompare(b.country.name),
-                },
-                {
-                    title: 'Προϊόντα',
-                    dataIndex: 'products_count',
-                    key: 'products',
-                    sortDirections: ['descend', 'ascend'],
-                    sorter: (a, b) => a.products_count - b.products_count,
                 },
                 {
                     title: 'Ενέργειες',
