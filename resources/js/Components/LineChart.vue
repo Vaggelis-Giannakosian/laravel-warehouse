@@ -42,8 +42,9 @@ export default defineComponent({
                     x: {
                         type: 'time',
                         time: {
+                            unit: 'week',
                             displayFormats: {
-                                day: 'D/M/YY'
+                                week: 'DD/MM/YY'
                             }
                         }
                     }
