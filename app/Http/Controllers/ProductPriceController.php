@@ -31,12 +31,13 @@ class ProductPriceController extends Controller
     {
         $validated = $request->validate([
             'price' => ['required','numeric'],
-            'datetime' => ['required','date']
+            'datetime' => ['required','date','before_or_equal:now']
         ]);
+        $datetime = Carbon::parse($validated['datetime'])->timestamp;
 
         $price->update([
             'price' => $validated['price'],
-            'datetime' => $validated['datetime']
+            'datetime' => $datetime
         ]);
 
         return back();
