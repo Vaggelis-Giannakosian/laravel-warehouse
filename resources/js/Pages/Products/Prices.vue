@@ -21,14 +21,12 @@
     </form>
 
     <SearchTable v-if="product" label="Λίστα τιμών" :table-data="product.prices" :columns="columns" class="px-2"
-                 :filters="['id','name','ska','current_price','quantity','status','category.name','provider.name']">
+                 :filters="['id','price','datetime']">
 
 
         <template #price="{text,record}">
             <div v-if="editablePriceForm?.id === record.id">
-                <a-input v-model:value="editablePriceForm['price']"
-                         style="margin: -5px 0"
-                />
+                <Input type="text" @keypress.enter="save(record.id)" v-model="editablePriceForm.price" class="w-full"/>
                 <InputError class="mb-0 mr-2" :message="editablePriceForm.errors.price"/>
             </div>
 
@@ -39,7 +37,7 @@
 
         <template #date="{text,record}">
             <div  v-if="editablePriceForm?.id === record.id">
-                <Datepicker  v-model:date="editablePriceForm['datetime']"
+                <Datepicker  v-model:date="editablePriceForm.datetime"
                     style="margin: -5px 0"
                 />
                 <InputError class="mb-0 mr-2" :message="editablePriceForm.errors.datetime"/>

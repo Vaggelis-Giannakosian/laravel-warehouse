@@ -16,6 +16,12 @@
                         Ενημέρωση προϊόντος "{{product.name}}"
                     </h2>
 
+                    <nav-link  :href="route('products.show',product)" class="ml-auto">
+                        <primary-button>
+                            Προβολή
+                        </primary-button>
+                    </nav-link>
+
                     <nav-link  :href="route('products.index')">
                         <primary-button>
                             Επιστροφή

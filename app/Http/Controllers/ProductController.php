@@ -62,11 +62,13 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Inertia\Response|\Inertia\ResponseFactory
      */
     public function show(Product $product)
     {
-        return $product->loadMissing(['category','provider','prices']);
+        return inertia('Products/Show',[
+            'product' => $product->loadMissing(['category','provider','prices'=>fn($q)=>$q->oldest('datetime')])
+        ]);
     }
 
     /**

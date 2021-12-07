@@ -23,7 +23,7 @@ Run:
 
 ```
 composer install
-php artisan sqlearn:install
+php artisan warehouse:install
 npm install
 npm run prod
 php artisan serve

@@ -27,7 +27,7 @@ class ProductSeeder extends Seeder
                 'provider_id' => $providers->random(),
             ]);
 
-            ProductPrice::factory()->count(5)->create([
+            ProductPrice::factory()->count(29)->create([
                 'product_id' => $product->id
             ]);
         }
