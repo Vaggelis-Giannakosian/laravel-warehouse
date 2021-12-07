@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductPrice;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ProductPriceController extends Controller
@@ -13,12 +14,14 @@ class ProductPriceController extends Controller
 
         $validated = $request->validate([
             'price' => ['required','numeric'],
-            'datetime' => ['required','date']
+            'datetime' => ['required','date','before_or_equal:now']
         ]);
+        $datetime = Carbon::parse($validated['datetime'])->timestamp;
 
         ProductPrice::create([
-            'price' => $validated['price'],
-            'datetime' => $validated['datetime']
+            'price' => round($validated['price'],2),
+            'datetime' => $datetime,
+            'product_id' => $product->id
         ]);
 
         return back();

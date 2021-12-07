@@ -50,7 +50,10 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        Product::create($request->validated()); // the product created observer will add the new price entry
+        Product::create(array_merge(
+            $request->validated(),
+            ['current_price' => round($request->current_price,2)]
+        )); // the product created observer will add the new price entry
         flash('Το προϊόν δημιουργήθηκε επιτυχώς');
         return redirect()->route('products.index');
     }

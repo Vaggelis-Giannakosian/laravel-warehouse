@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="priceForm.post(route('prices.store',product))">
+    <form @submit.prevent="priceForm.post(route('prices.store',product),{onSuccess: initForm})">
 
         <div class="flex items-start">
             <div class="px-2 mt-5">
@@ -10,13 +10,13 @@
 
             <div class="px-2 mt-5">
                 <Label value="Ημερομηνία" class="mb-2"/>
-                <Input type="text" v-model="priceForm.datetime" class="w-full"/>
+                <Datepicker type="text" v-model:date="priceForm.datetime" class="w-full"/>
                 <InputError class="mb-0 mr-2" :message="priceForm.errors.datetime"/>
             </div>
         </div>
 
-        <Button class="ml-2 mt-2">
-            ΚΑΤΑΧΩΡΗΣΗ
+        <Button class="ml-2 mt-2" :disabled="priceForm.processing">
+            ΚΑΤΑΧΩΡΗΣΗ ΤΙΜΗΣ
         </Button>
     </form>
 
@@ -58,11 +58,13 @@ import {useForm} from "@inertiajs/inertia-vue3";
 import {defineComponent} from 'vue'
 import {EditOutlined,DeleteTwoTone} from '@ant-design/icons-vue'
 import moment from "moment";
+import Datepicker from "@/Components/FormInputs/Datepicker";
 
 export default defineComponent({
     name: "Prices",
     props:['product','updateProduct'],
     components:{
+        Datepicker,
         SearchTable,
         InputError,
         Input,
@@ -72,8 +74,14 @@ export default defineComponent({
     setup(props){
         const priceForm = useForm({
             price: '',
-            datetime: '',
+            datetime: moment(),
         })
+
+        function initForm(){
+            priceForm.price = '';
+            priceForm.datetime = moment()
+            props.updateProduct()
+        }
 
         const columns = [
             {
@@ -122,7 +130,8 @@ export default defineComponent({
             return moment(dateString).format('DD/MM/YY HH:mm')
         }
 
-        return {priceForm,columns,deleteEntry,formatDate}
+
+        return {priceForm,columns,deleteEntry,formatDate, initForm}
     }
 })
 </script>
