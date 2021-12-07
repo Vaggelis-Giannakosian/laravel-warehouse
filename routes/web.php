@@ -3,6 +3,7 @@
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductPriceController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -32,7 +33,7 @@ Route::group(['middleware' => ['auth']],function(){
     Route::resource('users',UserController::class)->except('show');
 
     Route::resource('products',ProductController::class);
-    Route::delete('products/{product}/{price}/',[ProductController::class,'destroyPrice'])->name('products.destroy-price');
+    Route::resource('products/{product}/prices',ProductPriceController::class)->only(['store','update','destroy']);
 });
 
 require __DIR__.'/auth.php';

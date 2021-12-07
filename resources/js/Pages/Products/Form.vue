@@ -61,38 +61,11 @@
         </div>
     </form>
 
-
-    <SearchTable v-if="product" label="Λίστα τιμών" :table-data="product.prices" :columns="columns"
-                 :filters="['id','name','ska','current_price','quantity','status','category.name','provider.name']">
-
-        <template #date="{text}">
-            {{ formatDate(text) }}
-        </template>
-
-
-        <template #action="{record}">
-            <nav-link href="" class="mr-3">
-                <a href="#" title="Επεξεργασία">
-                    <EditOutlined/>
-                </a>
-            </nav-link>
-
-            <a-popconfirm placement="topRight" title="Είστε σίγουροι πως θέλετε να προχωρήσετε με την διαγραφή"
-                          ok-text="Ναι"
-                          cancel-text="Όχι" @confirm="deleteEntry(record)">
-                <a href="#" title="Διαγραφή">
-                    <DeleteTwoTone/>
-                </a>
-            </a-popconfirm>
-        </template>
-
-    </SearchTable>
-
+    <Prices v-if="product" :product="product" :updateProduct="updateProduct"/>
 </template>
 
 <script>
 import {useForm} from '@inertiajs/inertia-vue3'
-import { Inertia } from '@inertiajs/inertia'
 import Input from '@/Components/FormInputs/Input'
 import Checkbox from '@/Components/FormInputs/Checkbox'
 import SelectInput from '@/Components/FormInputs/SelectInput'
@@ -103,6 +76,7 @@ import TextArea from "@/Components/FormInputs/TextArea";
 import SearchTable from '@/Components/SearchTable'
 import moment from "moment";
 import {EditOutlined,DeleteTwoTone} from '@ant-design/icons-vue'
+import Prices from './Prices'
 export default {
     name: 'ProductForm',
     props: ['submitMethod', 'submitUrl', 'product', 'categories', 'providers'],
@@ -116,6 +90,7 @@ export default {
         Checkbox,
         SearchTable,
         EditOutlined,DeleteTwoTone,
+        Prices,
     },
     setup(props) {
         const form = useForm({
@@ -130,50 +105,11 @@ export default {
 
         const statuses = {active: 'Ενεργό', inactive: 'Ανενεργό'}
 
-        function formatDate(dateString) {
-            return moment(dateString).format('DD/MM/YY HH:mm')
+        function updateProduct(){
+            form.current_price = props.product.current_price
         }
 
-        function deleteEntry(record){
-            Inertia.delete(route('products.destroy-price',[props.product,record]));
-        }
-
-        const columns = [
-            {
-                title: 'ID',
-                dataIndex: 'id',
-                key: 'id',
-                sortDirections: ['descend', 'ascend'],
-                sorter: (a, b) => a.id - b.id,
-            },
-            {
-                title: 'Τιμή',
-                dataIndex: 'price',
-                key: 'price',
-                sortDirections: ['descend', 'ascend'],
-                sorter: (a, b) => a.price - b.price,
-            },
-            {
-                title: 'Ημερομηνία Καταχώρησης',
-                dataIndex: 'datetime',
-                key: 'datetime',
-                sortDirections: ['descend', 'ascend'],
-                sorter: (a, b) => new Date(a.datetime).getTime() - new Date(b.datetime).getTime(),
-                slots: {
-                    customRender: 'date'
-                }
-            },
-            {
-                title: 'Ενέργειες',
-                dataIndex: '',
-                key: 'x',
-                slots: {
-                    customRender: 'action',
-                },
-            },
-        ];
-
-        return {form, statuses, columns, formatDate,deleteEntry}
+        return {form, statuses, updateProduct}
     }
 }
 </script>

@@ -50,13 +50,7 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $product = Product::create($request->validated());
-        ProductPrice::create([
-            'price'=>$product->current_price,
-            'datetime'=>now()->timestamp,
-            'product_id' => $product->id
-        ]);
-
+        Product::create($request->validated()); // the product created observer will add the new price entry
         flash('Το προϊόν δημιουργήθηκε επιτυχώς');
         return redirect()->route('products.index');
     }
@@ -81,7 +75,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         return inertia('Products/Edit',[
-            'product' => $product->loadMissing(['category','provider','prices']),
+            'product' => $product->loadMissing(['category','provider','prices'=>fn($q)=>$q->latest('datetime')]),
             'categories' => ProductCategory::all()->pluck('name','id'),
             'providers' => Provider::all()->pluck('name','id')
         ]);
@@ -97,7 +91,7 @@ class ProductController extends Controller
     public function update(ProductRequest $request, Product $product)
     {
         $product->update($request->validated());
-        flash('Το προϊόν δημιουργήθηκε επιτυχώς');
+        flash('Το προϊόν ενημερώθηκε επιτυχώς');
         return redirect()->route('products.index');
     }
 
@@ -112,29 +106,5 @@ class ProductController extends Controller
         $product->delete();
         flash('Το προϊόν διαγράφτηκε επιτυχώς');
         return back();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function destroyPrice(Product $product, ProductPrice $price)
-    {
-        $this->authorize('update',$product);
-
-        $price->delete();
-
-        if(
-            ($latestPrice = optional($product->prices()->latest()->first())->price) != $product->current_price
-        ){
-            $product->update([
-                'current_price' => $latestPrice ?? 0
-            ]);
-        }
-
-        flash('Το προϊόν διαγράφτηκε επιτυχώς');
-        return redirect()->route('products.edit',$product);
     }
 }
