@@ -41,8 +41,7 @@ class UserTest extends TestCase
         $this->assertTrue(Hash::check('password',$newUser->password));
     }
 
-    public function test_registration_date_accessor(){
-        $this->assertIsInt($this->user->getAttributes()['registration_date']);
+    public function test_registration_date_is_casted_to_datetime(){
         $this->assertInstanceOf(Carbon::class,$this->user->registration_date);
     }
 }

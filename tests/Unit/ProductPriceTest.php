@@ -32,8 +32,7 @@ class ProductPriceTest extends TestCase
         $this->assertInstanceOf(Product::class, $this->price->product);
     }
 
-    public function test_datetime_accessor(){
-        $this->assertIsInt($this->price->getAttributes()['datetime']);
+    public function test_datetime_is_casted_to_real_datetime(){
         $this->assertInstanceOf(Carbon::class,$this->price->datetime);
     }
 

@@ -49,8 +49,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $appends = [
-        'registration_date'
+    protected $casts = [
+        'registration_date' => 'datetime'
     ];
 
     public function country(): BelongsTo
@@ -63,13 +63,6 @@ class User extends Authenticatable
         if (!$value) return;
 
         $this->attributes['password'] = bcrypt($value);
-    }
-
-    protected function getRegistrationDateAttribute($value)
-    {
-        if(empty($value)) return $value;
-
-        return Carbon::createFromTimestamp( (int) $value);
     }
 
 }

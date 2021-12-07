@@ -3,8 +3,8 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\Country;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
@@ -15,13 +15,11 @@ class RegistrationTest extends TestCase
     {
         $response = $this->get('/register');
 
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
     public function test_new_users_can_register()
     {
-
-        $this->withoutExceptionHandling();
         $response = $this->post('/register', [
             'name' => 'Test User',
             'last_name' => 'User',
@@ -33,7 +31,7 @@ class RegistrationTest extends TestCase
             'country_id' => Country::factory()->create()->id
         ]);
 
-        $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $this->assertFalse(auth()->check());
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -21,14 +22,17 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['auth']],function(){
     Route::inertia('/','Dashboard')->name('dashboard');
 
-    Route::resource('/countries',CountryController::class)->except('show');
+    Route::resource('countries',CountryController::class)->except('show');
 
-    Route::resource('/categories',ProductCategoryController::class)->except('show');
-    Route::post('/categories/{category}/update-order',[ProductCategoryController::class,'updateOrder'])->name('categories.update-order');
+    Route::resource('categories',ProductCategoryController::class)->except('show');
+    Route::post('categories/{category}/update-order',[ProductCategoryController::class,'updateOrder'])->name('categories.update-order');
 
-    Route::resource('/providers',ProviderController::class)->except('show');
+    Route::resource('providers',ProviderController::class)->except('show');
 
-    Route::resource('/users',UserController::class)->except('show');
+    Route::resource('users',UserController::class)->except('show');
+
+    Route::resource('products',ProductController::class);
+    Route::delete('products/{product}/{price}/',[ProductController::class,'destroyPrice'])->name('products.destroy-price');
 });
 
 require __DIR__.'/auth.php';

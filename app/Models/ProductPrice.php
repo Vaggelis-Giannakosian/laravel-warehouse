@@ -11,8 +11,14 @@ class ProductPrice extends Model
 {
     use HasFactory;
 
-    protected $appends = [
-        'datetime'
+    protected $fillable = [
+        'price',
+        'datetime',
+        'product_id'
+    ];
+
+    protected $casts = [
+        'datetime' => 'datetime'
     ];
 
     public function product():BelongsTo
@@ -20,10 +26,4 @@ class ProductPrice extends Model
         return $this->belongsTo(Product::class);
     }
 
-    protected function getDatetimeAttribute($value)
-    {
-        if(empty($value)) return $value;
-
-        return Carbon::createFromTimestamp( (int) $value);
-    }
 }

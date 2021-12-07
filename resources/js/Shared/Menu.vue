@@ -24,6 +24,16 @@
             </div>
         </a-menu-item>
 
+        <a-menu-item key="products">
+            <div class="flex items-center">
+                <ShoppingOutlined class="mr-3"/>
+
+                <BreezeNavLink :href="route('products.index')" :active="route().current('products.*')">
+                    Προϊόντα
+                </BreezeNavLink>
+            </div>
+        </a-menu-item>
+
         <a-menu-item key="providers">
             <div class="flex items-center">
                 <UsergroupAddOutlined class="mr-3"/>
@@ -59,14 +69,14 @@
 
 <script>
 import BreezeNavLink from '@/Components/NavLink.vue'
-import {DashboardOutlined, GlobalOutlined, FolderOutlined,UsergroupAddOutlined} from '@ant-design/icons-vue'
+import {DashboardOutlined, GlobalOutlined, FolderOutlined,UsergroupAddOutlined, ShoppingOutlined} from '@ant-design/icons-vue'
 
 export default {
     name: "Admin",
     props:['current','handleClick'],
     components:{
         BreezeNavLink,
-        DashboardOutlined, GlobalOutlined,FolderOutlined,UsergroupAddOutlined
+        DashboardOutlined, GlobalOutlined,FolderOutlined,UsergroupAddOutlined,ShoppingOutlined
     }
 }
 </script>
