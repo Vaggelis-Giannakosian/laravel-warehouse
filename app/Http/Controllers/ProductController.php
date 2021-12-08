@@ -36,9 +36,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return inertia('Products/Create',[
-           'categories' => ProductCategory::all()->pluck('name','id'),
-           'providers' => Provider::all()->pluck('name','id')
+        return inertia('Products/Create', [
+            'categories' => ProductCategory::orderBy('ordering')->get()->map->only('id', 'name'),
+            'providers' => Provider::all()->pluck('name', 'id')
         ]);
     }
 
@@ -79,10 +79,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return inertia('Products/Edit',[
-            'product' => $product->loadMissing(['category','provider','prices'=>fn($q)=>$q->latest('datetime')]),
-            'categories' => ProductCategory::all()->pluck('name','id'),
-            'providers' => Provider::all()->pluck('name','id')
+        return inertia('Products/Edit', [
+            'product' => $product->loadMissing(['category', 'provider', 'prices' => fn($q) => $q->latest('datetime')]),
+            'categories' => ProductCategory::orderBy('ordering')->get()->map->only('id', 'name'),
+            'providers' => Provider::all()->pluck('name', 'id')
         ]);
     }
 

@@ -40,8 +40,14 @@
 
             <div class="w-1/2 px-2 mt-5">
                 <Label for="category" value="Κατηγορία" class="mb-2"/>
-                <SelectInput id="category" :options="categories" :searchable="true" v-model="form.category_id"
-                             class="w-full"/>
+                <SelectInput id="category" :options="categories"
+                             :searchable="true"
+                             v-model="form.category_id"
+                             label="name"
+                             value-prop="id"
+                             track-by="name"
+                             class="w-full"
+                ></SelectInput>
                 <InputError class="mb-0 mr-2" :message="form.errors.category_id"/>
             </div>
         </div>
