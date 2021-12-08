@@ -102,11 +102,11 @@ class CountryController extends Controller
 
         if($message) {
             flash($message, 'danger');
-            return back();
+            return redirect()->route('countries.index');
         }
 
         $country->delete();
         flash('Η χώρα διαγράφτηκε επιτυχώς');
-        return back();
+        return redirect()->route('countries.index');
     }
 }

@@ -44,7 +44,7 @@ class ProductTest extends TestCase
     {
         $this->assertInstanceOf(HasMany::class, $this->product->prices());
         $this->assertInstanceOf(Collection::class, $this->product->prices);
-        $this->assertCount(3, $this->product->prices);
+        $this->assertCount(4, $this->product->prices); //the product observer will create one more price on created event
         $this->assertInstanceOf(ProductPrice::class, $this->product->prices->first());
     }
 
