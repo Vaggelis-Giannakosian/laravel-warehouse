@@ -18,7 +18,7 @@
 
                     <nav-link  :href="route('categories.index')">
                         <primary-button>
-                            Επιστροφή
+                            Λίστα κατηγοριών
                         </primary-button>
                     </nav-link>
                 </div>

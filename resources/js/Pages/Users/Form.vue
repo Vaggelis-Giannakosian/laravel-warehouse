@@ -11,28 +11,28 @@
 
         <div class="flex ">
             <div class="w-1/2 px-2 mt-5">
-                <Label value="Όνομα" class="mb-2"/>
-                <Input type="text" v-model="form.name" class="w-full" autofocus/>
+                <Label for="name" value="Όνομα" class="mb-2"/>
+                <Input type="text" id="name" v-model="form.name" class="w-full"/>
                 <InputError class="mb-0 mr-2" :message="form.errors.name"/>
             </div>
 
             <div class="w-1/2 px-2 mt-5">
-                <Label value="Επίθετο" class="mb-2"/>
-                <Input type="text" v-model="form.last_name" class="w-full"/>
+                <Label for="last_name" value="Επίθετο" class="mb-2"/>
+                <Input type="text" id="last_name" v-model="form.last_name" class="w-full"/>
                 <InputError class="mb-0 mr-2" :message="form.errors.last_name"/>
             </div>
         </div>
 
         <div class="flex ">
             <div class="w-1/2 px-2 mt-5">
-                <Label value="Όνομα χρήστη" class="mb-2"/>
-                <Input type="text" v-model="form.username" class="w-full"/>
+                <Label for="username" value="Όνομα χρήστη" class="mb-2"/>
+                <Input type="text" id="username" v-model="form.username" class="w-full"/>
                 <InputError class="mb-0 mr-2" :message="form.errors.username"/>
             </div>
 
             <div class="w-1/2 px-2 mt-5">
-                <Label value="Email" class="mb-2"/>
-                <Input type="text" v-model="form.email" class="w-full"/>
+                <Label for="email" value="Email" class="mb-2"/>
+                <Input type="text" id="email" v-model="form.email" class="w-full"/>
                 <InputError class="mb-0 mr-2" :message="form.errors.email"/>
             </div>
         </div>
@@ -40,40 +40,34 @@
 
         <div class="flex ">
             <div class="w-1/2 px-2 mt-5">
-                <Label value="Διεύθυνση" class="mb-2"/>
-                <Input type="text" v-model="form.address" class="w-full"/>
+                <Label for="address" value="Διεύθυνση" class="mb-2"/>
+                <Input type="text" id="address" v-model="form.address" class="w-full"/>
                 <InputError class="mb-0 mr-2" :message="form.errors.address"/>
             </div>
 
             <div class="w-1/2 px-2 mt-5">
-                <Label for="country" value="Χώρα" class="mb-2"/>
-                <SelectInput id="country" :options="countries" :searchable="true" v-model="form.country_id" class="w-full" autocomplete="country"/>
+                <Label value="Χώρα" for="country" class="mb-2"/>
+                <SelectInput :options="countries" id="country" :searchable="true" v-model="form.country_id" class="w-full"/>
                 <InputError class="mb-0 mr-2" :message="form.errors.country_id"/>
             </div>
         </div>
 
         <div class="flex ">
             <div class="w-1/2 px-2 mt-5">
-                <Label value="Κωδικός" class="mb-2"/>
-                <Input type="password" v-model="form.password" class="w-full"/>
+                <Label value="Κωδικός" for="password" class="mb-2"/>
+                <Input type="password" id="password" v-model="form.password" class="w-full" autocomplete="off"/>
                 <InputError class="mb-0 mr-2" :message="form.errors.password"/>
                 <span v-if="user" class="text-blue-600 text-xs">Αφήστε κενό εάν δεν επιθυμείτε να αλλαχτεί.</span>
             </div>
 
             <div class="w-1/2 px-2 mt-5">
-                <Label value="Επιβεβαίωση κωδικού" class="mb-2"/>
-                <Input type="password" v-model="form.password_confirmation" class="w-full"/>
+                <Label for="password_confirmation" value="Επιβεβαίωση κωδικού" class="mb-2"/>
+                <Input type="password" id="password_confirmation" v-model="form.password_confirmation" class="w-full"/>
                 <InputError class="mb-0 mr-2" :message="form.errors.password_confirmation"/>
             </div>
         </div>
 
         <div class="flex ">
-            <div class="w-1/2 px-2 mt-5">
-                <Label value="Διεύθυνση" class="mb-2"/>
-                <Input type="text" v-model="form.address" class="w-full"/>
-                <InputError class="mb-0 mr-2" :message="form.errors.address"/>
-            </div>
-
             <div class="w-1/2 px-2 mt-5">
                 <Label value="Κατάσταση" class="mb-2"/>
                 <SelectInput :options="statuses" v-model="form.status" class="w-full"/>
@@ -120,7 +114,7 @@ export default {
             address: props.user?.address,
             country_id: props.user?.country_id,
             status: props.user?.status,
-            is_admin: props.user?.is_admin,
+            is_admin: props.user?.is_admin === '1',
             password: props.user?.password,
             password_confirmation: props.user?.password_confirmation,
         })

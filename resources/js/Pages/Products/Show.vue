@@ -46,10 +46,10 @@
                     ></span>
                 </li>
                 <li>
-                    <strong>Κατηγορία</strong>: {{ product.category.name }}
+                    <strong>Κατηγορία</strong>: <a :href="route('categories.edit',product.category)">{{ product.category.name }}</a>
                 </li>
                 <li>
-                    <strong>Προμηθευτής</strong>: {{ product.provider.name }}
+                    <strong>Προμηθευτής</strong>: <a :href="route('providers.edit',product.provider)">{{ product.provider.name }}</a>
                 </li>
             </ul>
 

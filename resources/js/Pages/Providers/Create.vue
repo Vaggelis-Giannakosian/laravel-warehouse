@@ -18,7 +18,7 @@
 
                     <nav-link  :href="route('providers.index')">
                         <primary-button>
-                           Επιστροφή
+                            Λίστα προμηθευτών
                         </primary-button>
                     </nav-link>
                 </div>
