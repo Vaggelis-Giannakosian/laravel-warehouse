@@ -1,8 +1,8 @@
 {
     "name": "laravel/laravel",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "Warehouse demo project.",
+    "keywords": ["warehouse", "laravel"],
     "license": "MIT",
     "require": {
         "php": "^7.4|^8.0",
