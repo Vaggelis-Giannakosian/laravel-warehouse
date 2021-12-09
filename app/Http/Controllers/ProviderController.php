@@ -84,11 +84,11 @@ class ProviderController extends Controller
         if($provider->products()->exists())
         {
             flash('Ο προμηθευτής δεν μπορεί να διαγραφτεί λόγω συσχετισμένων προϊόντων','danger');
-            return back();
+            return redirect()->route('providers.index');
         }
 
         $provider->delete();
         flash('O προμηθευτής διαγράφτηκε επιτυχώς');
-        return back();
+        return redirect()->route('providers.index');
     }
 }

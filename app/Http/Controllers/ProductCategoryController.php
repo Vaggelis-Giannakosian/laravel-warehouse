@@ -103,11 +103,11 @@ class ProductCategoryController extends Controller
     {
         if($category->products()->count()) {
             flash('Η κατηγορία δεν μπορεί να διαγραφτεί λόγω συσχετισμένων προϊόντων', 'danger');
-            return back();
+            return redirect()->route('categories.index');
         }
 
         $category->delete();
         flash('Η κατηγορία διαγράφτηκε επιτυχώς');
-        return back();
+        return redirect()->route('categories.index');
     }
 }

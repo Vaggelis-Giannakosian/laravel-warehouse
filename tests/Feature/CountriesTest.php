@@ -53,13 +53,13 @@ class CountriesTest extends TestCase
     {
         $this->get(route('countries.index'))
             ->assertStatus(Response::HTTP_OK)
-            ->assertInertia(function (Assert $page) {
-                $page->component('Countries/Index')
-                    ->has('countries', 1, fn(Assert $page) => $page
-                        ->where('id', $this->country->id)
-                        ->etc()
-                    );
-            });
+            ->assertInertia(fn(Assert $page) => $page
+                ->component('Countries/Index')
+                ->has('countries', 1, fn(Assert $page) => $page
+                    ->where('id', $this->country->id)
+                    ->etc()
+                )
+            );
     }
 
     public function test_countries_create_page()
