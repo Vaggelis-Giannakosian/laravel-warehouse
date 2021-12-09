@@ -49,15 +49,14 @@ class CountriesTest extends TestCase
         $this->delete(route('countries.destroy', $this->country))->assertStatus(Response::HTTP_FOUND)->assertRedirect('/login');
     }
 
-
     public function test_countries_index()
     {
         $this->get(route('countries.index'))
             ->assertStatus(Response::HTTP_OK)
             ->assertInertia(function (Assert $page) {
                 $page->component('Countries/Index')
-                    ->has('countries', 1,fn(Assert $page)=>$page
-                        ->where('id',$this->country->id)
+                    ->has('countries', 1, fn(Assert $page) => $page
+                        ->where('id', $this->country->id)
                         ->etc()
                     );
             });
@@ -67,79 +66,77 @@ class CountriesTest extends TestCase
     {
         $this->get(route('countries.create'))
             ->assertStatus(Response::HTTP_OK)
-            ->assertInertia(function (Assert $page) {
-                $page->component('Countries/Create');
-            });
+            ->assertInertia(fn(Assert $page) => $page
+                ->component('Countries/Create')
+            );
     }
-
 
     public function test_countries_store()
     {
         $newCountry = Country::factory()->raw();
 
-        $this->post(route('countries.store'),$newCountry)
+        $this->post(route('countries.store'), $newCountry)
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect(route('countries.index'));
 
-        $this->assertDatabaseCount('countries',2);
+        $this->assertDatabaseCount('countries', 2);
     }
 
     public function test_countries_unique_code_on_store()
     {
-        $this->post(route('countries.store'),$this->country->toArray())
+        $this->post(route('countries.store'), $this->country->toArray())
             ->assertStatus(Response::HTTP_FOUND)
             ->assertSessionHasErrors('code');
 
-        $this->assertDatabaseCount('countries',1);
+        $this->assertDatabaseCount('countries', 1);
     }
 
     public function test_countries_edit()
     {
         $this->get(route('countries.edit', $this->country))
             ->assertStatus(Response::HTTP_OK)
-            ->assertInertia(function (Assert $page) {
-                $page->component('Countries/Edit')
-                    ->has('country', fn(Assert $page) => $page
-                        ->where('id', $this->country->id)
-                        ->where('name', $this->country->name)
-                        ->where('code', $this->country->code)
-                        ->etc()
-                    );
-            });
+            ->assertInertia(fn(Assert $page) => $page
+                ->component('Countries/Edit')
+                ->has('country', fn(Assert $page) => $page
+                    ->where('id', $this->country->id)
+                    ->where('name', $this->country->name)
+                    ->where('code', $this->country->code)
+                    ->etc()
+                )
+            );
     }
-
 
     public function test_countries_update()
     {
         $newCountry = Country::factory()->raw();
 
-        $this->put(route('countries.update', $this->country),$newCountry)
+        $this->put(route('countries.update', $this->country), $newCountry)
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect(route('countries.index'));
 
-        $this->assertDatabaseCount('countries',1);
-        $this->assertDatabaseHas('countries',$newCountry);
+        $this->assertDatabaseCount('countries', 1);
+        $this->assertDatabaseHas('countries', $newCountry);
     }
 
     public function test_countries_destroy()
     {
         $newCountry = Country::factory()->create();
 
-        $this->delete(route('countries.destroy',$newCountry))
+        $this->delete(route('countries.destroy', $newCountry))
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect(route('countries.index'));
 
-        $this->assertDatabaseMissing('countries',$newCountry->toArray());
+        $this->assertDatabaseMissing('countries', $newCountry->toArray());
     }
 
     public function test_countries_with_associated_users_cannot_be_deleted()
     {
-        $this->delete(route('countries.destroy',$this->country))
+        $this->delete(route('countries.destroy', $this->country))
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect(route('countries.index'))
-            ->assertSessionHas('flash.message','Η χώρα δεν μπορεί να διαγραφτεί λόγω συσχετισμένων χρηστών');
+            ->assertSessionHas('flash.message', 'Η χώρα δεν μπορεί να διαγραφτεί λόγω συσχετισμένων χρηστών');
 
-        $this->assertDatabaseCount('countries',1);
-        $this->assertDatabaseHas('countries',$this->country->only('id'));
+        $this->assertDatabaseCount('countries', 1);
+        $this->assertDatabaseHas('countries', $this->country->only('id'));
     }
 }

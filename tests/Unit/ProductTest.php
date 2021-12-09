@@ -18,9 +18,9 @@ class ProductTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * @var Provider
+     * @var Product
      */
-    private Provider $provider;
+    private Product $product;
 
     protected function setUp(): void
     {
@@ -46,6 +46,14 @@ class ProductTest extends TestCase
         $this->assertInstanceOf(Collection::class, $this->product->prices);
         $this->assertCount(4, $this->product->prices); //the product observer will create one more price on created event
         $this->assertInstanceOf(ProductPrice::class, $this->product->prices->first());
+    }
+
+    public function test_created_observer_creates_a_price_when_a_product_is_created()
+    {
+        $product = Product::factory()->create();
+
+        $this->assertCount(1,$product->prices);
+        $this->assertEquals($product->current_price,$product->prices->first()->price);
     }
 
 }

@@ -2,11 +2,8 @@
 
 namespace Tests\Unit;
 
-use App\Models\Country;
 use App\Models\Product;
 use App\Models\ProductCategory;
-use App\Models\Provider;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;

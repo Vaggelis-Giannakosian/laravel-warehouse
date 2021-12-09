@@ -16,9 +16,9 @@ class ProductPriceTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * @var Country
+     * @var ProductPrice
      */
-    private Country $country;
+    private ProductPrice $price;
 
     protected function setUp(): void
     {
@@ -34,6 +34,61 @@ class ProductPriceTest extends TestCase
 
     public function test_datetime_is_casted_to_real_datetime(){
         $this->assertInstanceOf(Carbon::class,$this->price->datetime);
+    }
+
+    public function test_created_observer_updates_product_price_if_needed()
+    {
+        //travel 1 day to the future in order for these prices to be the latest
+        $this->travel(1)->days();
+
+        $newPrice = ProductPrice::factory()->create(['product_id' => $this->price->product_id,'datetime' => now()->timestamp]);
+
+        //when a price is created with higher datetime it updates the parent product
+        $this->assertEquals((float) $newPrice->price,(float) $this->price->product->fresh()->current_price);
+
+        $olderPrice = ProductPrice::factory()->create(['product_id' => $this->price->product_id,'datetime' => now()->subDay()]);
+        //if the created price does not have the highest datetime it does not update the parent product
+        $this->assertEquals((float) $newPrice->price, (float) $this->price->product->fresh()->current_price);
+    }
+
+    public function test_updated_observer_updates_product_price_if_needed()
+    {
+        $updatedPrice = 342.22;
+        $olderPriceUpdate = 777.77;
+        $this->assertCount(2,$this->price->product->prices); // the one is this->price, the other is generated from the product observer
+
+        $latestPrice = $this->price->product->prices()->latest('datetime')->first();
+        $latestPrice->update(['price'=> $updatedPrice]);
+
+        //the current price is updated
+        $this->assertEquals($updatedPrice, (float) $this->price->product->fresh()->current_price);
+
+        $oldestPrice = $this->price->product->prices()->oldest('datetime')->first();
+        $oldestPrice->update(['price'=> $olderPriceUpdate]);
+
+        //the current price is not affected
+        $this->assertEquals($updatedPrice, (float) $this->price->product->fresh()->current_price);
+    }
+
+    public function test_deleted_observer_updates_product_price_if_needed()
+    {
+        $this->assertCount(2,$this->price->product->prices); // the one is this->price, the other is generated from the product observer
+
+        $this->travel(1)->day();
+        $latestPrice = ProductPrice::factory()->create(['product_id'=>$this->price->product_id,'datetime'=>now()->timestamp]);
+
+        //price is updated
+        $this->assertEquals((float) $latestPrice->price, (float) $this->price->product->fresh()->current_price);
+
+        $latestPrice->delete();
+
+        //price is updated to the latest datetime
+        $latestPrice = $this->price->product->prices()->latest('datetime')->first();
+        $this->assertEquals((float) $latestPrice->price, (float) $this->price->product->fresh()->current_price);
+
+        //if we delete another datetime the price is not affected
+        $this->price->product->prices()->oldest('datetime')->first()->delete();
+        $this->assertEquals((float) $latestPrice->price, (float) $this->price->product->fresh()->current_price);
     }
 
 }
