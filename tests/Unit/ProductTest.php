@@ -53,7 +53,7 @@ class ProductTest extends TestCase
         $product = Product::factory()->create();
 
         $this->assertCount(1,$product->prices);
-        $this->assertEquals($product->current_price,$product->prices->first()->price);
+        $this->assertEquals( (float) $product->current_price, (float)$product->prices->first()->price);
     }
 
 }

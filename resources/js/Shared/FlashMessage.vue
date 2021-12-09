@@ -9,7 +9,7 @@
             position="top left"
         >
             <template #body="{ item, close }">
-                <div :class="`bg-${item.data.color}-100 border shadow-lg border-${item.data.color}-500 rounded-b text-${item.data.color}-900 px-4 py-3 shadow-md relative mb-1`"
+                <div :class="`notification-${item.type} border shadow-lg rounded-b px-4 py-3 shadow-md relative mb-1`"
                      role="alert">
                     <div class="flex items-center">
                         <div class="py-1">
@@ -129,6 +129,22 @@ export default {
 </script>
 
 <style lang="scss">
+
+.notification-danger{
+    @apply bg-red-100 border-red-500 text-red-900;
+}
+
+.notification-success{
+    @apply bg-green-100 border-green-500 text-green-900;
+}
+
+.notification-warning{
+    @apply bg-orange-100 border-orange-500 text-orange-900;
+}
+
+.notification-info{
+    @apply bg-blue-100 border-blue-500 text-blue-900;
+}
 
 .v-fade-left-enter-active,
 .v-fade-left-leave-active,
