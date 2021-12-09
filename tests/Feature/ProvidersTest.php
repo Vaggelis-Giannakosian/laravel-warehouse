@@ -23,7 +23,9 @@ class ProvidersTest extends TestCase
     {
         parent::setUp();
         $this->provider = Provider::factory()->create();
-        $this->signIn();
+        $this->signIn(
+            User::factory()->create(['country_id' => $this->provider->country_id])
+        );
     }
 
     public function test_providers_crud_is_limited_to_auth_users()
@@ -130,7 +132,7 @@ class ProvidersTest extends TestCase
         $this->assertDatabaseMissing('providers', $newProvider->toArray());
     }
 
-    public function test_providers_with_associated_users_cannot_be_deleted()
+    public function test_providers_with_associated_products_cannot_be_deleted()
     {
         $product = Product::factory()->create();
 

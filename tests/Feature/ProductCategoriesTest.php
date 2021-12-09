@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\Product;
 use App\Models\ProductCategory;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\Assert;
 use Symfony\Component\HttpFoundation\Response;
@@ -125,7 +124,7 @@ class ProductCategoriesTest extends TestCase
         $this->assertDatabaseMissing('product_categories', $newProductCategory->toArray());
     }
 
-    public function test_categories_with_associated_users_cannot_be_deleted()
+    public function test_categories_with_associated_products_cannot_be_deleted()
     {
         $product = Product::factory()->create();
 

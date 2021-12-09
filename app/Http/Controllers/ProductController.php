@@ -95,7 +95,7 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
-        $product->update($request->validated());
+        $product->update($request->except('current_price'));
         flash('Το προϊόν ενημερώθηκε επιτυχώς');
         return redirect()->route('products.index');
     }
@@ -110,6 +110,6 @@ class ProductController extends Controller
     {
         $product->delete();
         flash('Το προϊόν διαγράφτηκε επιτυχώς');
-        return back();
+        return redirect()->route('products.index');
     }
 }

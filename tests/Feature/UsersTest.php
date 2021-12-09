@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\Assert;
@@ -24,7 +23,7 @@ class UsersTest extends TestCase
         $this->user = User::factory()->create();
 
         $this->signIn(
-            User::factory()->admin()->create()
+            User::factory()->admin()->create(['country_id'=>$this->user->country_id])
         );
     }
 
@@ -140,7 +139,7 @@ class UsersTest extends TestCase
         $this->assertDatabaseMissing('users', $newUser->toArray());
     }
 
-    public function test_users_with_associated_users_cannot_be_deleted()
+    public function test_users_cannot_delete_themselves()
     {
         $this->delete(route('users.destroy', auth()->user()))
             ->assertStatus(Response::HTTP_FOUND)
