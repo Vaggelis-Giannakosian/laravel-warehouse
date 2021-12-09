@@ -96,12 +96,12 @@ class UserController extends Controller
     {
         if(auth()->user()->is($user)){
             flash('Δεν μπορείτε να διαγράψετε τον εαυτό σας','danger');
-            return back();
+            return redirect()->route('users.index');
         }
 
 
         $user->delete();
         flash("Ο χρήστης διαγράφτηκε επιτυχώς",'danger');
-        return back();
+        return redirect()->route('users.index');
     }
 }

@@ -22,8 +22,10 @@ class CountriesTest extends TestCase
     {
         parent::setUp();
         $this->country = Country::factory()->create();
-        $user = User::factory()->create(['country_id' => $this->country->id]);
-        $this->signIn($user);
+
+        $this->signIn(
+            User::factory()->create(['country_id' => $this->country->id])
+        );
     }
 
     public function test_countries_crud_is_limited_to_auth_users()

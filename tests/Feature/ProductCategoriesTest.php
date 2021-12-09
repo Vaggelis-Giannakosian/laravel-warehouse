@@ -23,8 +23,7 @@ class ProductCategoriesTest extends TestCase
     {
         parent::setUp();
         $this->category = ProductCategory::factory()->create();
-        $user = User::factory()->create();
-        $this->signIn($user);
+        $this->signIn();
     }
 
     public function test_categories_crud_is_limited_to_auth_users()

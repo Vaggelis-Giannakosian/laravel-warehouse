@@ -23,8 +23,7 @@ class ProvidersTest extends TestCase
     {
         parent::setUp();
         $this->provider = Provider::factory()->create();
-        $user = User::factory()->create();
-        $this->signIn($user);
+        $this->signIn();
     }
 
     public function test_providers_crud_is_limited_to_auth_users()
