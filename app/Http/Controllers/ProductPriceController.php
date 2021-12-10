@@ -24,7 +24,7 @@ class ProductPriceController extends Controller
             'product_id' => $product->id
         ]);
 
-        return back();
+        return redirect()->route('products.edit',$product);
     }
 
     public function update(Request $request, Product $product, ProductPrice $price)
@@ -40,7 +40,7 @@ class ProductPriceController extends Controller
             'datetime' => $datetime
         ]);
 
-        return back();
+        return redirect()->route('products.edit',$product);
     }
 
     /**

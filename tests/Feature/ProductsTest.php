@@ -25,7 +25,7 @@ class ProductsTest extends TestCase
         $this->signIn();
     }
 
-    public function test_products_crud_is_limited_to_auth_products()
+    public function test_products_crud_is_limited_to_auth_users()
     {
 
         //Unauthenticated product
@@ -77,6 +77,22 @@ class ProductsTest extends TestCase
         $this->assertDatabaseCount('products', 2);
     }
 
+    public function test_products_show()
+    {
+        $this->get(route('products.show', $this->product))
+            ->assertStatus(Response::HTTP_OK)
+            ->assertInertia(fn(Assert $page) => $page
+                ->component('Products/Show')
+                ->has('product', fn(Assert $page) => $page
+                    ->where('id', $this->product->id)
+                    ->etc()
+                    ->has('prices')
+                    ->has('category')
+                    ->has('provider')
+                )
+            );
+    }
+
     public function test_products_edit()
     {
         $this->get(route('products.edit', $this->product))
@@ -95,14 +111,14 @@ class ProductsTest extends TestCase
 
     public function test_products_update()
     {
-        $newProduct = Product::factory()->raw(); //this will leave the password unchanged
+        $newProduct = Product::factory()->raw();
 
         $this->put(route('products.update', $this->product), $newProduct)
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect(route('products.index'));
 
         $this->assertDatabaseCount('products', 1);
-        $this->assertDatabaseHas('products',[
+        $this->assertDatabaseHas('products', [
             'id' => $this->product->id,
             'name' => $newProduct['name'],
             'ska' => $newProduct['ska'],
@@ -115,14 +131,14 @@ class ProductsTest extends TestCase
 
     public function test_products_update_cannot_change_the_price()
     {
-        $newProduct = Product::factory()->raw(); //this will leave the password unchanged
+        $newProduct = Product::factory()->raw();
 
         $this->put(route('products.update', $this->product), $newProduct)
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect(route('products.index'));
 
         $this->assertDatabaseCount('products', 1);
-        $this->assertDatabaseMissing('products',[
+        $this->assertDatabaseMissing('products', [
             'id' => $this->product->id,
             'current_price' => $newProduct['current_price']
         ]);
